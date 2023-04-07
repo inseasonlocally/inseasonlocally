@@ -1,0 +1,46 @@
+{
+  "name": "inseasonlocally",
+  "version": "0.1.0",
+  "description": "## Resources [Asana Board](https://app.asana.com/0/1204327238436147/board) [Pull Request Template]()",
+  "main": "./client/index.js",
+  "scripts": {
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inseasonlocally/inseasonlocally.git"
+  },
+  "author": "Yeong Sil Yoon, Stephanie Serrano, David An, Michael Bildstein",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inseasonlocally/inseasonlocally/issues"
+  },
+  "homepage": "https://github.com/inseasonlocally/inseasonlocally#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.2.3",
+    "concurrently": "^5.0.0",
+    "cross-env": "^6.0.3",
+    "css-loader": "^6.5.1",
+    "eslint": "^7.17.0",
+    "eslint-plugin-react": "^7.21.5",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "nodemon": "^1.18.9",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.64.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0",
+    "webpack-hot-middleware": "^2.24.3"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "pg": "^8.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router": "^6.10.0"
+  }
+}
