@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "description": "## Resources [Asana Board](https://app.asana.com/0/1204327238436147/board) [Pull Request Template]()",
   "main": "./client/index.js",
-  "type": "module",
-  "types": "module",
   "scripts": {
     "start": "nodemon ./server/server.js",
     "build": "NODE_ENV=production webpack",
