@@ -17,27 +17,27 @@ module.exports = {
   module: {
     rules: [
       {
-       test: /\.jsx?/,
-       exclude: /node_modules/,
-       use: {
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            ['@babel/preset-env', { targets: "defaults" }],
-            ['@babel/preset-react', { targets: "defaults" }]
-          ]
+        test: /\.jsx?/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env', { targets: "defaults" }],
+              ['@babel/preset-react', { targets: "defaults" }]
+            ]
+          }
         }
-      }
       },
       {
         test: /\.scss?/,
         exclude: /node_modules/,
         use: [
-            'style-loader',
-            'css-loader',
-            ]
-       },
-       {
+          'style-loader',
+          'css-loader',
+        ]
+      },
+      {
         test: /\.(png|jpe?g|gif)$/i,
         use: 'file-loader',
       }
@@ -54,12 +54,12 @@ module.exports = {
       publicPath: '/build',
       directory: path.resolve(__dirname, 'build')
     },
-      //automatically open browser after it bundles our files
-      open: true,
-      //enables webpack Hot module replacement exchanges, adds, or removes modules while an application is running, without a full reload. to improve performance
-      hot: true,
-      //automatically update the app as you make changes
-      liveReload: true,
+    //automatically open browser after it bundles our files
+    open: true,
+    //enables webpack Hot module replacement exchanges, adds, or removes modules while an application is running, without a full reload. to improve performance
+    hot: true,
+    //automatically update the app as you make changes
+    liveReload: true,
     proxy: {
       '/api': 'http://localhost:3000'
     }
