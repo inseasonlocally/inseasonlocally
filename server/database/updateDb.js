@@ -70,7 +70,23 @@ const updateDb = async () => {
     }
   };
 
-  await saveSeasonProduceInfo();
+  // await saveSeasonProduceInfo();
+
+  // add image links to the Produce table
+  const saveImageLinks = async () => {
+    for(const produce of produceItems) {
+      const link = 'assets/' + produce.replaceAll(' ', '') + '.jpg';
+      const sqlCommand = `
+        UPDATE Produce
+        SET img = '${link}'
+        WHERE name = '${produce}';
+      `;
+      await db.query(sqlCommand);
+    }
+  };
+
+  await saveImageLinks();
+
 };
 
 updateDb();
