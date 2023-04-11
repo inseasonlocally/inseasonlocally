@@ -22,6 +22,11 @@ app.get('/sign-up', (req, res) => {
   res.status(200).send('reached the sign up page');
 })
 
+// route to landing page
+app.get('/landing', (req, res) => {
+  res.status(200).send('reached the landing page');
+})
+
 // route to 'add review' page
 app.get('/add-reviews', (req, res) => {
   res.status(200).send('reached the add reviews page');
