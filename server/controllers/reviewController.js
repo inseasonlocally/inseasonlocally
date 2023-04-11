@@ -1,21 +1,6 @@
 const db = require('../database/model.js');
 const reviewController = {};
 
-reviewController.getReviewsByEmail = async (req, res, next) => {
-  // assumes that email will be passed in from URL params
-
-  const email = req.params.email;
-  const sqlCommand = `
-    SELECT * FROM Reviews
-    WHERE email = $1;
-  `;
-  const values = [ email ];
-  await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in reviewController.getReviewsByEmail: getting user\'s reviews from Reviews table in the database');
-    res.reviews = result.rows;
-  });
-  return next();
-}
 
 reviewController.getReviews = async (req, res, next) => {
   // assumes that email will be passed in from URL params
