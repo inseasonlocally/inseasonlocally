@@ -3,6 +3,7 @@ const express = require('express');
 const { user } = require('pg/lib/defaults.js');
 const userController = require('./controllers/userController.js');
 const reviewController = require('./controllers/reviewController.js');
+const produceController = require('./controllers/produceController.js');
 
 const app = express();
 const PORT = 3000;
@@ -28,8 +29,8 @@ app.post('/sign-up', userController.createUser, (req, res) => {
 });
 
 // retrieve pictures of in-season produce based on location & date
-app.get('/landing', (req, res) => {
-  res.status(200).send('reached the landing page');
+app.get('/produce/:location', produceController.getAllProduce, (req, res) => {
+  res.status(200).json(res.locals.produce);
 });
 
 // retrieve reviews of the selected produce/user

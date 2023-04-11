@@ -2,25 +2,7 @@ const db = require('../database/model.js');
 const produceController = {};
 
 produceController.getAllProduce = async (req, res, next) => {
-  const { location } = req.body();
-  // const months = {
-  //   December: 12
-  //   January: 1,
-  //   February: 2,
-
-  //   March: 3,
-  //   April: 4,
-  //   May: 5,
-
-  //   June: 6,
-  //   July: 7,
-  //   August: 8,
-
-  //   September: 9,
-  //   October: 10,
-  //   November: 11,
-  //
-  // };
+  const location = req.params.location;
   const currentMonth = new Date().getMonth();
 
   const getSeason = (month) => {
@@ -34,8 +16,17 @@ produceController.getAllProduce = async (req, res, next) => {
 
   // ** TO DO - finish the SQL command **
   const sqlCommand = `
-
+    SELECT name, img 
+    FROM Produce RIGHT OUTER JOIN SeasonProduce
+    ON produce = name
+    WHERE season = $1 AND state = $2;
   `;
+  const values = [ currentSeason, location ];
+  await db.query(sqlCommand, values, (err, result) => {
+    if(err) return next('Error in produceController.getAllProduce: getting all produce from the database based on location and season');
+    res.locals.produce = result.rows;
+    return next();
+  });
 
 };
 
