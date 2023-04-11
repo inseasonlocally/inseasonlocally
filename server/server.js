@@ -12,30 +12,27 @@ app.get('/', (req, res, next) => {console.log('root middleware reached'); return
   res.status(200).sendFile(path.resolve(__dirname,'../client/index.html'));
 });
 
-// route to sign in page
-app.get('/sign-in', (req, res) => {
-  res.status(200).send('reached the sign in page');
-})
-
-// route to signup page
-app.get('/sign-up', (req, res) => {
-  res.status(200).send('reached the sign up page');
-})
-
-// route to landing page
+// retrieve pictures of in-season produce based on location & date
 app.get('/landing', (req, res) => {
   res.status(200).send('reached the landing page');
 })
 
-// route to 'add review' page
-app.get('/add-reviews', (req, res) => {
+// retrieve reviews of the selected produce
+
+// retrieve reviews of the current user
+
+// create a new review and write to database
+app.post('/add-reviews:email', (req, res) => {
   res.status(200).send('reached the add reviews page');
 })
 
-// route to 'edit review' page
-app.get('/edit-reviews', (req, res) => {
+// edit an existing review in the database
+app.patch('/edit-reviews:email', (req, res) => {
   res.status(200).send('reach the edit reviews page');
 })
+
+// delete an existing review in the database
+
 
 // catch-all route handler for any requests to an unknown route
 app.use((req, res) => {
