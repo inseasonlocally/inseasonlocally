@@ -9,9 +9,9 @@ reviewController.getReviewsByEmail = async (req, res, next) => {
     SELECT * FROM Reviews
     WHERE email = $1;
   `;
-  const values = [ email ];
+  const values = [email];
   await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in reviewController.getReviewsByEmail: getting user\'s reviews from Reviews table in the database');
+    if (err) return next('Error in reviewController.getReviewsByEmail: getting user\'s reviews from Reviews table in the database');
     res.reviews = result.rows;
   });
   return next();
@@ -25,9 +25,9 @@ reviewController.getReviewsByProduce = async (req, res, next) => {
     SELECT * FROM Reviews
     WHERE produce = $1;
   `;
-  const values = [ produce ];
+  const values = [produce];
   await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in reviewController.getReviewsByProduce: getting all reviews for the produce from Reviews table in the database');
+    if (err) return next('Error in reviewController.getReviewsByProduce: getting all reviews for the produce from Reviews table in the database');
     res.reviews = result.rows;
   });
   return next();
@@ -44,10 +44,10 @@ reviewController.updateReview = async (req, res, next) => {
     WHERE review_id = $1
     RETURNING *;
   `;
-  const values = [ review_id, description ];
+  const values = [review_id, description];
 
   await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in reviewController.updateReview: updating user\'s review to Reviews table in the database');
+    if (err) return next('Error in reviewController.updateReview: updating user\'s review to Reviews table in the database');
     res.reviews = result.rows[0];
   });
 
@@ -64,7 +64,7 @@ reviewController.deleteReview = async (req, res, next) => {
   `;
 
   await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in reviewController.deleteReview: deleting user\'s review to Reviews table in the database');
+    if (err) return next('Error in reviewController.deleteReview: deleting user\'s review to Reviews table in the database');
     res.confirmDelete = 'Review deleted';
   });
 
@@ -82,10 +82,10 @@ reviewController.createReview = async (req, res, next) => {
     RETURNING *;
   `;
 
-  const values = [ email, produce, farm, description ];
+  const values = [email, produce, farm, description];
 
   await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in reviewController.createReview: writing user\'s review to Reviews table in the database');
+    if (err) return next('Error in reviewController.createReview: writing user\'s review to Reviews table in the database');
     res.reviews = result.rows[0];
   });
 
