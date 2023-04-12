@@ -3,8 +3,7 @@ const reviewController = {};
 
 
 reviewController.getReviews = async (req, res, next) => {
-  // assumes that email will be passed in from URL params
-  console.log(req.query);
+  // req.query will determine which filter will be used (produce, email)
   let filter = '';
   let value = '';
   if(req.query.produce) {
@@ -15,6 +14,8 @@ reviewController.getReviews = async (req, res, next) => {
     filter = 'email';
     value = req.query.email;
   }
+
+  // obtain all filtered reviews to send back to the client
   const sqlCommand = `
     SELECT * FROM Reviews
     WHERE ${filter} = $1;
@@ -28,10 +29,11 @@ reviewController.getReviews = async (req, res, next) => {
 }
 
 reviewController.updateReview = async (req, res, next) => {
-  // assumes that data will be passed in from req.body
+  // req.params.is will provide the review id which will allow us to update specific reviews
   const reviewId = req.params.id;
   const { description } = req.body;
 
+  // update the description of a review specified by the review id
   const sqlCommand = `
     UPDATE Reviews
     SET description = $2
@@ -49,8 +51,10 @@ reviewController.updateReview = async (req, res, next) => {
 };
 
 reviewController.deleteReview = async (req, res, next) => {
-  // assumes that data will be passed in from URL params
+   // req.params.is will provide the review id which will allow us to update specific reviews
   const reviewId = req.params.id;
+
+  // delete the review specified by the review id
   const sqlCommand = `
     DELETE FROM Reviews
     WHERE review_id = $1;
@@ -65,9 +69,9 @@ reviewController.deleteReview = async (req, res, next) => {
 
 reviewController.createReview = async (req, res, next) => {
   // assumes that user email, produce will be passed in from req.body
-
   const { email, produce, farm, description } = req.body;
 
+  // add a new review to the database
   const sqlCommand = `
     INSERT INTO Reviews (email, produce, farm, description)
     VALUES ($1, $2, $3, $4)

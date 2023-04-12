@@ -46,22 +46,28 @@ userController.verifyUser = async (req, res, next) => {
   const { email, password } = req.body;
   if(!email || !password) return next('Error in userController.verifyUser: not given all necessary inputs');
   try {
+    // retrieving user information by email
     const sqlCommand = `
       SELECT * FROM Accounts WHERE email = $1;
     `;
     const values = [ email ];
     const result = await db.query(sqlCommand, values);
+    // if user does not exist, sign in is unsuccessful, move to the next middleware
     if(!result.rows[0]) {
       res.locals.signIn = false;
       return next();
     }
+
+    // if user exists, verify inputted password is correct
     const matched = await bcrypt.compare(password, result.rows[0].password);
     console.log(matched);
+    // password matches, sign in is successful. save user information to return to client
     if(matched) {
       res.locals.signIn = true;
       res.locals.email = result.rows[0].email;
       res.locals.location = result.rows[0].state;
     }
+    // if password does not match, sign in is not successful
     else res.locals.signIn = false;
   } catch(err){
     return next('Error in userController.verifyUser: verifying the user in the Accounts table of the database');
@@ -71,8 +77,9 @@ userController.verifyUser = async (req, res, next) => {
 
 userController.changeLocation = async (req, res, next) => {
   // assumes the data will be passed in from req.body
-  
   const { email, location } = req.body;
+
+  // will update the location of the user given updated location and user email
   const values = [email, location];
   const sqlCommand = `
     UPDATE Accounts

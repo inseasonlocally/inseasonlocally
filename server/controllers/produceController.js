@@ -2,9 +2,11 @@ const db = require('../database/model.js');
 const produceController = {};
 
 produceController.getAllProduce = async (req, res, next) => {
+  // req.params.location will provide the user's current location
   const location = req.params.location;
   const currentMonth = new Date().getMonth();
 
+  // determine the season based on current date
   const getSeason = (month) => {
     if (month === 12 || month <= 2) return 'Winter';
     if (month >= 3 && month <= 5) return 'Spring';
@@ -14,6 +16,7 @@ produceController.getAllProduce = async (req, res, next) => {
   }
   const currentSeason = getSeason(currentMonth);
 
+  // obtain produce information filtered by season and location
   const sqlCommand = `
     SELECT name, img 
     FROM Produce RIGHT OUTER JOIN SeasonProduce
