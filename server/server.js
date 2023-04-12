@@ -17,7 +17,7 @@ app.get('/', (req, res, next) => {console.log('root middleware reached'); return
 });
 
 app.post('/sign-in', userController.verifyUser, (req, res) => {
-  res.json({
+  res.status(200).json({
     signIn: res.locals.signIn,
     email: res.locals.email,
     location: res.locals.location
@@ -25,7 +25,12 @@ app.post('/sign-in', userController.verifyUser, (req, res) => {
 });
 
 app.post('/sign-up', userController.createUser, (req, res) => {
-  res.json(res.locals.createdUser);
+  res.status(200).json(res.locals.createdUser);
+});
+
+// changes the location where we're searching for produce
+app.patch('/location', userController.changeLocation, (req, res) => {
+  res.status(200).json(res.locals.location);
 });
 
 // retrieve pictures of in-season produce based on location & date

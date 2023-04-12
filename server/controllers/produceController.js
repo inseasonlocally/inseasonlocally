@@ -14,7 +14,6 @@ produceController.getAllProduce = async (req, res, next) => {
   }
   const currentSeason = getSeason(currentMonth);
 
-  // ** TO DO - finish the SQL command **
   const sqlCommand = `
     SELECT name, img 
     FROM Produce RIGHT OUTER JOIN SeasonProduce

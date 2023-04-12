@@ -15,14 +15,13 @@ reviewController.getReviews = async (req, res, next) => {
     filter = 'email';
     value = req.query.email;
   }
-  console.log(filter);
   const sqlCommand = `
     SELECT * FROM Reviews
     WHERE ${filter} = $1;
   `;
   const values = [ value ];
   await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in reviewController.getReviewsByProduce: getting all reviews for the produce from Reviews table in the database');
+    if(err) return next('Error in reviewController.getReviews: getting all reviews for the produce from Reviews table in the database');
     res.locals.reviews = result.rows;
     return next();
   });

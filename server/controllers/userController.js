@@ -69,5 +69,25 @@ userController.verifyUser = async (req, res, next) => {
   return next();
 }
 
+userController.changeLocation = async (req, res, next) => {
+  // assumes the data will be passed in from req.body
+  
+  const { email, location } = req.body;
+  const values = [email, location];
+  const sqlCommand = `
+    UPDATE Accounts
+    SET state = $2
+    WHERE email = $1
+    RETURNING *;
+  `;
+
+  try {
+    const result = await db.query(sqlCommand, values);
+    res.locals.location = result.rows[0].state;
+    return next();
+  } catch (err) {
+    return next('Error in userController.changeLocation: location not changed')
+  }
+};
 
 module.exports = userController;
