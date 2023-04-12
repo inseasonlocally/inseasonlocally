@@ -75,7 +75,7 @@ reviewController.createReview = async (req, res, next) => {
     RETURNING *;
   `;
 
-  const values = [ email, produce, farm, description ];
+  const values = [email, produce, farm, description];
 
   await db.query(sqlCommand, values, (err, result) => {
     if(err) return next('Error in reviewController.createReview: writing user\'s review to Reviews table in the database');

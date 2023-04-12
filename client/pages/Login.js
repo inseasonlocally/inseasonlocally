@@ -16,7 +16,7 @@ export default function Login() {
   const handleSignup = async (e) => {
     e.preventDefault()
     console.log("You are signing up now")
-    return (<Signup />)
+    // return console.log
   }
 
   return (
@@ -41,7 +41,7 @@ export default function Login() {
         />
         <button>Log In</button>
       </form>
-      <button onSubmit={handleSignup}>Sign Up</button>
-    </div>
+      <button onClick={handleSignup}>Sign Up</button>
+    </div >
   )
 }
