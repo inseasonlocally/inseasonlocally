@@ -59,12 +59,18 @@ const updateDb = async () => {
       for(produce of seasonProduce[key]) {
         if(!produceStates[produce]) continue;
         for(state of produceStates[produce]) {
-          const sqlCommand = `
+          const sqlCommand1 = `
+            SELECT * FROM SeasonProduce
+            WHERE season = $1 AND produce = $2 AND state = $3;
+          `;
+          const values = [key, produce, state]; 
+          const result = await db.query(sqlCommand1, values);
+          if(result.rows[0]) continue;
+          const sqlCommand2 = `
             INSERT INTO SeasonProduce (season, produce, state)
             VALUES($1, $2, $3)
           `;
-          const values = [key, produce, state]; 
-          await db.query(sqlCommand, values);
+          await db.query(sqlCommand2, values);
         }
       }
     }

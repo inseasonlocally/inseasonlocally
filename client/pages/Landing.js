@@ -13,7 +13,7 @@ export default function Landing() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // console.log('this is your new location:', setLocation())
+    // send email and new location in the body 
   }
 
   const handleEditReview = (e) => {

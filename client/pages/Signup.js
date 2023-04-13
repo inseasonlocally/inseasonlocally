@@ -40,7 +40,7 @@ export default function Signup() {
         type="select"
         choices={states}
       />
-      <button>Sign Up</button>
+      <input type='submit'>Sign Up</input>
     </form >
   )
 }
