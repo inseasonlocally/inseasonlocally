@@ -23,9 +23,13 @@ produceController.getAllProduce = async (req, res, next) => {
     ON produce = name
     WHERE season = $1 AND state = $2;
   `;
-  const values = [ currentSeason, location ];
+  const values = [currentSeason, location];
   await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in produceController.getAllProduce: getting all produce from the database based on location and season');
+    if (err) return next({
+      log: 'Error in produceController.getAllProduce: getting all produce from the database based on location and season',
+      status: 400,
+      message: err.message
+    });
     res.locals.produce = result.rows;
     return next();
   });

@@ -6,11 +6,11 @@ reviewController.getReviews = async (req, res, next) => {
   // req.query will determine which filter will be used (produce, email)
   let filter = '';
   let value = '';
-  if(req.query.produce) {
+  if (req.query.produce) {
     filter = 'produce';
     value = req.query.produce;
   }
-  else{
+  else {
     filter = 'email';
     value = req.query.email;
   }
@@ -20,9 +20,9 @@ reviewController.getReviews = async (req, res, next) => {
     SELECT * FROM Reviews
     WHERE ${filter} = $1;
   `;
-  const values = [ value ];
+  const values = [value];
   await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in reviewController.getReviews: getting all reviews for the produce from Reviews table in the database');
+    if (err) return next('Error in reviewController.getReviews: getting all reviews for the produce from Reviews table in the database');
     res.locals.reviews = result.rows;
     return next();
   });
@@ -32,6 +32,7 @@ reviewController.updateReview = async (req, res, next) => {
   // req.params.is will provide the review id which will allow us to update specific reviews
   const reviewId = req.params.id;
   const { description } = req.body;
+  console.log(description);
 
   // update the description of a review specified by the review id
   const sqlCommand = `
@@ -40,10 +41,14 @@ reviewController.updateReview = async (req, res, next) => {
     WHERE review_id = $1
     RETURNING *;
   `;
-  const values = [ reviewId, description ];
+  const values = [reviewId, description];
 
   await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in reviewController.updateReview: updating user\'s review to Reviews table in the database');
+    if (err) return next({
+      log: 'Error in reviewController.updateReview: updating user\'s review to Reviews table in the database',
+      status: 400,
+      message: err.message
+    });
     res.locals.review = result.rows[0];
     return next();
   });
@@ -51,18 +56,23 @@ reviewController.updateReview = async (req, res, next) => {
 };
 
 reviewController.deleteReview = async (req, res, next) => {
-   // req.params.is will provide the review id which will allow us to update specific reviews
+  // req.params.is will provide the review id which will allow us to update specific reviews
   const reviewId = req.params.id;
 
   // delete the review specified by the review id
   const sqlCommand = `
     DELETE FROM Reviews
-    WHERE review_id = $1;
+    WHERE review_id = $1
+    RETURNING *;
   `;
-  const values = [ reviewId ];
+  const values = [reviewId];
   await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in reviewController.deleteReview: deleting user\'s review to Reviews table in the database');
-    res.locals.confirmDelete = 'Review deleted';
+    if (err) return next({
+      log: 'Error in reviewController.deleteReview: deleting user\'s review to Reviews table in the database',
+      status: 400,
+      message: err.message
+    });
+    res.locals.review = result.rows[0];
     return next();
   });
 };
@@ -70,6 +80,7 @@ reviewController.deleteReview = async (req, res, next) => {
 reviewController.createReview = async (req, res, next) => {
   // assumes that user email, produce will be passed in from req.body
   const { email, produce, farm, description } = req.body;
+  const produceName = produce[0].toUpperCase() + produce.slice(1);
 
   // add a new review to the database
   const sqlCommand = `
@@ -78,10 +89,14 @@ reviewController.createReview = async (req, res, next) => {
     RETURNING *;
   `;
 
-  const values = [email, produce, farm, description];
+  const values = [email, produceName, farm, description];
 
   await db.query(sqlCommand, values, (err, result) => {
-    if(err) return next('Error in reviewController.createReview: writing user\'s review to Reviews table in the database');
+    if (err) return next({
+      log: 'Error in reviewController.createReview: writing user\'s review to Reviews table in the database',
+      status: 400,
+      message: err.message
+    });
     res.locals.review = result.rows[0];
     console.log(result);
     return next();

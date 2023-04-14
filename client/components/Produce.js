@@ -12,7 +12,7 @@ const Produce = (props) => {
 
   const handleReviews = (e) => {
     e.preventDefault()
-    navigate('/reviews')
+    navigate('/reviews', { state: { produce: props.name } })
   }
 
   return (
