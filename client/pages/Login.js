@@ -2,63 +2,25 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import React from 'react'
 import { useState } from 'react'
 import Signup from './Signup';
+import { useLogin } from '../hooks/useLogin';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [location, setLocation] = useState('');
+  const { login, error } = useLogin();
 
   //Need to complete with route to verify login (2 options - have functionality within this file or create additional folders/file to handle login functionality)
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-    const body = {
-      email,
-      password,
-    }
-    const response = await fetch('/sign-in', {
-      method: "POST",
-      body: JSON.stringify(body)
-    });
-  
-    if (response.ok) {
-      const data = await response.json();
-      // when user is not found in the database
-      if(!data.signIn) {
-        setEmail('')
-        setPassword('')
-        alert ('Email or password is incorrect!')
-      }
-      else setLocation(data.location);
-    }
-  }
-    catch (error) {
-      console.error('Error: could not fetch data')
-    }
+    e.preventDefault()
+    //utilize async function from useLoginHook to initiate login
+    await login(email, password)
   }
 
-  //did this fetch request-- does this belong here?? Why is there a handle sign up on login page and signup page?
-  //Need to complete with sign-up page
-  const handleSignup = async (e) => {
+  //Need to complete with sign-up page -> this should route user to the sign-up page
+  const handleSignup = (e) => {
     e.preventDefault()
-    console.log("You are signing up now")
-    try{
-      const body = {
-        email,
-        password,
-        location
-      }
-      const response = await fetch('', {
-        method: "POST",
-        body: JSON.stringify(body)
-      });
-      if (response.ok) {
-        const data = await response.json()
-      }
-    }
-    catch(error) {
-      console.error('Error: Error fetching data')
-    }
+    //render sign-up page if button is clicked
+    return (< Signup />)
   }
 
   return (

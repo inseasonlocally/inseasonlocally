@@ -5,9 +5,6 @@ import Landing from './Landing';
 import Review from '../components/Review';
 
 
-
-
-
 // After delete and/or submit buttons are clicked, re-render the screen with updated results
 export default function EditReview() {
 

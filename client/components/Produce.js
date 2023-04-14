@@ -14,7 +14,9 @@ const Produce = (produce) => {
 
   const handleReviews = (e) => {
     e.preventDefault()
-    console.log(e)
+    return (
+      <ReviewTable produce={produce} />
+    )
   }
 
   return (
