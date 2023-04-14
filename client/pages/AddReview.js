@@ -1,34 +1,35 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import React from 'react';
-import { useState, useEffect } from 'react';
-import Landing from './Landing';
-import { response } from '../../server/server';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Submit button- route back to landing page
 // 	*Can we use state to render our landing page to include the last clicked product's reviews?
 
-export default function AddReview() {
+const AddReview = () => {
   const [farmName, setFarmName] = useState('');
   const [produceName, setProduceName] = useState('');
   const [review, setReview] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const response = await fetch('/add-reviews', {
-      method: 'POST',
-      body: JSON.stringify(review),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    // const response = await fetch('/add-reviews', {
+    //   method: 'POST',
+    //   body: JSON.stringify(review),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
 
-    const json = await response.json();
+    // const json = await response.json();
 
-    if (!response.ok) {
-      setError(json.error)
-      setEmptyFields(json.emptyFields)
-    }
+    // if (!response.ok) {
+    //   setError(json.error)
+    //   setEmptyFields(json.emptyFields)
+    // }
+
+    navigate('/reviews')
   }
 
   return (
@@ -47,3 +48,5 @@ export default function AddReview() {
     </form>
   )
 }
+
+export default AddReview

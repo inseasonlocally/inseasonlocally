@@ -1,53 +1,60 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import React from 'react'
 import { useState, useEffect } from 'react'
 import LocationInput from '../components/LocationInput'
 import Produce from '../components/Produce';
+import { useUserContext } from '../hooks/useUserContext'
+import { v4 as uuid } from 'uuid'
 
-
-export default function Landing() {
+const Landing = () => {
   const [location, setLocation] = useState('');
   const states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-  const date = Date();
-  const produce = [];
+  const [produce, setProduce] = useState([]);
+  const { user } = useUserContext();
+  const { dispatch } = useUserContext();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // send email and new location in the body 
+  const displayProduce = async () => {
+    const response = await fetch(`/api/produce/${user.location}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+    const json = await response.json()
+
+    if (response.ok) {
+      //Update to store all produce results into an array
+      const items = json.map((el) => el)
+      setProduce(items);
+    }
   }
 
-  const handleEditReview = (e) => {
-    e.preventDefault()
-    console.log('You are editing your review')
-    // return //Edit Review page location
-  }
+  const handleSubmit = async () => {
+    // console.log('is the submit to change location working?')
+    const response = await fetch('/api/location', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: user.email,
+        location: location
+      })
+    })
 
-  const handleAddReview = (e) => {
-    e.preventDefault()
-    console.log("You are adding a review now")
-    // return //Add Review page location
+    const json = await response.json();
+
+    if (response.ok) {
+      localStorage.setItem('user', JSON.stringify(json))
+      dispatch({ type: 'UPDATE_LOCATION', payload: json })
+      displayProduce();
+    }
   }
 
   useEffect(() => {
-    const displayProduce = async () => {
-      const response = await fetch('/landing')
-      const json = await response.json()
-
-      if (response.ok) {
-        const data = await response.json();
-
-        //Update to store all produce results into an array
-        produce = data.map((el) => produce.push(el))
-
-      }
-    }
-  })
+    displayProduce();
+  }, [user]);
 
   return (
     <div>
       <div>Landing Page</div>
-      <div>Your Current Location is:</div>
-      <form onSubmit={handleSubmit}>
+      <div>Your Current Location is: {user.location}</div>
+      <div>
         <LocationInput
           label={<label>Change Current Location:</label>}
           value={location}
@@ -55,22 +62,19 @@ export default function Landing() {
           type="select"
           choices={states}
         />
-        <button>Submit</button>
-      </form>
+        <button onClick={handleSubmit}>Submit</button>
+      </div>
 
       <div>
-        {/* go through each produce and create a div for the produce */}
         {produce.map((el) => (
           < Produce
-            produce={produce}
+            key={uuid()} name={el.name} img={el.img} location={user.location}
           />
         ))
         }
-
       </div>
-
-      <button onClick={handleAddReview}>Add Review</button>
-      <button onClick={handleEditReview}>Edit Review</button>
     </div>
   )
 }
+
+export default Landing

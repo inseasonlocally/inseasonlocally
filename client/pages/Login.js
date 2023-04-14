@@ -1,13 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import React from 'react'
 import { useState } from 'react'
-import Signup from './Signup';
 import { useLogin } from '../hooks/useLogin';
+import { useNavigate } from 'react-router';
 
-export default function Login() {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login, error } = useLogin();
+  const navigate = useNavigate();
 
   //Need to complete with route to verify login (2 options - have functionality within this file or create additional folders/file to handle login functionality)
   const handleLogin = async (e) => {
@@ -19,15 +19,14 @@ export default function Login() {
   //Need to complete with sign-up page -> this should route user to the sign-up page
   const handleSignup = (e) => {
     e.preventDefault()
-    //render sign-up page if button is clicked
-    return (< Signup />)
+    navigate('/signup')
   }
 
   return (
     <div>
       <div>This is where our information or about page would go</div>
 
-      <form className='login' onSubmit={handleLogin}>
+      <div className='login'>
         <h3>Log In Here</h3>
 
         <label>Email</label>
@@ -43,9 +42,11 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
-        <input type='submit'>Log In</input>
-      </form>
+        <button onClick={handleLogin}>Log In</button>
+      </div>
       <button onClick={handleSignup}>Sign Up</button>
     </div >
   )
 }
+
+export default Login

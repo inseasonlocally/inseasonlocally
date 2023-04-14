@@ -1,12 +1,12 @@
 import React from 'react'
 
-export default function LocationInput({
+const LocationInput = ({
   type = "text",
   label,
   value,
   onChange,
   choices,
-}) {
+}) => {
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <label
@@ -25,3 +25,5 @@ export default function LocationInput({
     </div>
   );
 }
+
+export default LocationInput

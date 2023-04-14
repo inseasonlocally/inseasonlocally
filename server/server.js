@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const { user } = require('pg/lib/defaults.js');
+// const { user } = require('pg/lib/defaults.js');
 const userController = require('./controllers/userController.js');
 const reviewController = require('./controllers/reviewController.js');
 const produceController = require('./controllers/produceController.js');
@@ -10,13 +10,13 @@ const PORT = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded());
-app.use('/build', express.static(path.resolve(__dirname,'../build')));
+app.use('/build', express.static(path.resolve(__dirname, '../build')));
 
-app.get('/', (req, res, next) => {console.log('root middleware reached'); return next();}, (req, res) => {
-  res.status(200).sendFile(path.resolve(__dirname,'../client/index.html'));
+app.get('/', (req, res, next) => { console.log('root middleware reached'); return next(); }, (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
-app.post('/sign-in', userController.verifyUser, (req, res) => {
+app.post('/api/sign-in', userController.verifyUser, (req, res) => {
   res.status(200).json({
     signIn: res.locals.signIn,
     email: res.locals.email,
@@ -24,37 +24,45 @@ app.post('/sign-in', userController.verifyUser, (req, res) => {
   });
 });
 
-app.post('/sign-up', userController.createUser, (req, res) => {
-  res.status(200).json(res.locals.createdUser);
+app.post('/api/sign-up', userController.createUser, (req, res) => {
+  res.status(200).json({
+    signIn: res.locals.createdUser,
+    email: res.locals.email,
+    location: res.locals.location
+  });
 });
 
 // changes the location where we're searching for produce
-app.patch('/location', userController.changeLocation, (req, res) => {
-  res.status(200).json(res.locals.location);
+app.patch('/api/location', userController.changeLocation, (req, res) => {
+  res.status(200).json({
+    signIn: res.locals.changed,
+    email: res.locals.email,
+    location: res.locals.location
+  });
 });
 
 // retrieve pictures of in-season produce based on location & date
-app.get('/produce/:location', produceController.getAllProduce, (req, res) => {
+app.get('/api/produce/:location', produceController.getAllProduce, (req, res) => {
   res.status(200).json(res.locals.produce);
 });
 
 // retrieve reviews of the selected produce/user
-app.get('/reviews', reviewController.getReviews, (req, res) => {
+app.get('/api/reviews', reviewController.getReviews, (req, res) => {
   res.status(200).json(res.locals.reviews);
 });
 
 // create a new review and write to database
-app.post('/reviews', reviewController.createReview, (req, res) => {
+app.post('/api/reviews', reviewController.createReview, (req, res) => {
   res.status(200).json(res.locals.review);
 });
 
 // edit an existing review in the database
-app.patch('/reviews/:id', reviewController.updateReview, (req, res) => {
+app.patch('/api/reviews/:id', reviewController.updateReview, (req, res) => {
   res.status(200).json(res.locals.review);
 });
 
 // delete an existing review in the database
-app.delete('/reviews/:id', reviewController.deleteReview, (req, res) => {
+app.delete('/api/reviews/:id', reviewController.deleteReview, (req, res) => {
   res.status(200).json(res.locals.confirmDelete);
 });
 
@@ -75,7 +83,7 @@ app.use((err, req, res, next) => {
 
   console.log(`Error log: ${errorObj.log}`);
 
-  res.status(errorObj.status).send({message: errorObj.message});
+  res.status(errorObj.status).send({ message: errorObj.message });
 });
 
 // start server

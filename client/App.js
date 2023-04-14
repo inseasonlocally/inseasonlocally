@@ -7,11 +7,12 @@ import { useUserContext } from './hooks/useUserContext'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Landing from './pages/Landing'
-import AddReview from './pages/AddReview'
-import EditReview from './pages/EditReview'
 import Navigation from './components/NavBar'
+import ReviewTable from './components/ReviewTable'
+import AddReview from './pages/AddReview'
+import UserReviewTable from './components/UserReviewTable'
 
-export default function App() {
+const App = () => {
   const { user } = useUserContext()
   return (
     <div className='app'>
@@ -37,9 +38,27 @@ export default function App() {
             path='/signup'
             element={!user ? <Signup /> : <Navigate to='/' />}
           />
+
+          {/* Route for reviews once button is clicked */}
+          <Route
+            path='/reviews'
+            element={!user ? <Login /> : <ReviewTable />}
+          />
+
+          <Route
+            path='/addreviews'
+            element={!user ? <Login /> : <AddReview />}
+          />
+
+          <Route
+            path='/editreviews'
+            element={!user ? <Login /> : <UserReviewTable />}
+          />
+
         </Routes>
-        < EditReview />
       </BrowserRouter>
     </div>
   )
 }
+
+export default App
