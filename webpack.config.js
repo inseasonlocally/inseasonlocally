@@ -9,6 +9,7 @@ module.exports = {
     path: path.resolve(__dirname, './build'),
     filename: 'bundle.js'
   },
+  devtool: "source-map",
   target: 'web',
   mode: process.env.NODE_ENV,
   resolve: {
@@ -30,7 +31,7 @@ module.exports = {
         }
       },
       {
-        test: /\.scss?/,
+        test: /\.css?/,
         exclude: /node_modules/,
         use: [
           'style-loader',
