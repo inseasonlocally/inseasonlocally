@@ -59,12 +59,13 @@ export default function Landing() {
       </form>
 
       <div>
-        {/* {produce.map((el) => { */}
-        < Produce
-          value={produce}
-        />
-        {/* } */}
-        {/* //create individual produce component for each produce item */}
+        {/* go through each produce and create a div for the produce */}
+        {produce.map((el) => (
+          < Produce
+            produce={produce}
+          />
+        ))
+        }
 
       </div>
 
