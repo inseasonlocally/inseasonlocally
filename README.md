@@ -7,6 +7,18 @@
 
 [Figma Link](https://www.figma.com/file/j1SDqpdQiOmRuNTQsM4sf2/inseasonlocally?node-id=0-1&t=XZ2O48iIpwkRhlZL-0)
 
+## React Component Structure
+
+Overall Structure: 
+
+***App***
+		***Login***
+		***Sign-up***
+			***Landing***
+						***Reviews***
+								***Add Review***
+								***Edit Reviews***
+ 
 ## Information about the tables in the database
 
 
