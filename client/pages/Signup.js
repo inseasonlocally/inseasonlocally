@@ -38,7 +38,7 @@ const Signup = () => {
       </div>
         <div className='loginButtons'>
           <LocationInput
-            label={<label>Current Location:</label>}
+            label={<label>Current Location</label>}
             value={location}
             onChange={setLocation}
             type="select"

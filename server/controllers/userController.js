@@ -6,7 +6,11 @@ const userController = {};
 
 userController.createUser = async (req, res, next) => {
   const { email, password, location } = req.body;
-  if (!email || !password || !location) return next('Error in userController.createUser: not given all necessary inputs');
+  if (!email || !password || !location) return next({
+    log: 'Error in userController.createUser: not given all necessary inputs',
+    status: 400,
+    message: err.message
+  });
 
   // finding if user already exists
   try {
@@ -20,7 +24,11 @@ userController.createUser = async (req, res, next) => {
       return next();
     }
   } catch (err) {
-    return next('Error in userController.createUser: finding if user already exists');
+    return next({
+      log: 'Error in userController.createUser: finding if user already exists',
+      status: 400,
+      message: err.message
+    });
   }
   // if user does not already exist, create user
   try {
@@ -38,7 +46,11 @@ userController.createUser = async (req, res, next) => {
     res.locals.email = email;
     res.locals.location = location;
   } catch (err) {
-    return next('Error in userController.createUser: adding a new user to Accounts table in the database');
+    return next({
+      log: 'Error in userController.createUser: adding a new user to Accounts table in the database',
+      status: 400,
+      message: err.message
+    });
   }
   return next();
 
@@ -46,7 +58,11 @@ userController.createUser = async (req, res, next) => {
 
 userController.verifyUser = async (req, res, next) => {
   const { email, password } = req.body;
-  if (!email || !password) return next('Error in userController.verifyUser: not given all necessary inputs');
+  if (!email || !password) return next({
+    log: 'Error in userController.verifyUser: not given all necessary inputs',
+    status: 400,
+    message: err.message
+  });
   try {
     // retrieving user information by email
     const sqlCommand = `
@@ -72,7 +88,11 @@ userController.verifyUser = async (req, res, next) => {
     // if password does not match, sign in is not successful
     else res.locals.signIn = false;
   } catch (err) {
-    return next('Error in userController.verifyUser: verifying the user in the Accounts table of the database');
+    return next({
+      log: 'Error in userController.verifyUser: verifying the user in the Accounts table of the database',
+      status: 400,
+      message: err.message
+    });
   }
   return next();
 }
@@ -97,7 +117,11 @@ userController.changeLocation = async (req, res, next) => {
     res.locals.location = result.rows[0].state;
     return next();
   } catch (err) {
-    return next('Error in userController.changeLocation: location not changed')
+    return next({
+      log: 'Error in userController.changeLocation: location not changed',
+      status: 400,
+      message: err.message
+    });
   }
 };
 
