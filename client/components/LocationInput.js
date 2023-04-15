@@ -8,11 +8,11 @@ const LocationInput = ({
   choices,
 }) => {
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div /*style={{ display: "flex", justifyContent: "center" }}*/>
       <label
-        style={{ display: "flex", flexDirection: "column", marginBottom: 10 }}
+        /*style={{ display: "flex", flexDirection: "column", marginBottom: 10 }}*/
       >
-        <span style={{ marginBottom: 5, fontWeight: "bold" }}>{label}</span>
+        <span style={{ marginBottom: 5 }}>{label}</span>
 
         <select onChange={(e) => onChange(e.target.value)} value={value}>
           <option>Select State</option>

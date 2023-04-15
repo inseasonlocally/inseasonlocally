@@ -1,13 +1,19 @@
 body {
-  background: #f1f1f1;
+  background: hsl(52, 98%, 98%);
   margin: 10;
-  font-family: "Poppins";
+  font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
+  font-family: 'Berkshire Swash', cursive;
   color: #333;
   text-decoration: none;
   font-weight: 600;
+  font-size: 1.5rem;
+}
+
+h2 {
+  grid-row-start: 2;
   font-size: 1.25rem;
 }
 
@@ -30,7 +36,98 @@ img {
   height: 25%;
 }
 
-/* 
-.review-container {
-  margin-top: 50px;
-} */
+button {
+  background-color: hsla(74, 33%, 52%, 100%);
+  border-radius: 8px;
+  border-width: 0;
+  color: hsl(52, 98%, 98%);
+  cursor: pointer;
+  margin: 10px;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+button:hover {
+  background-color: hsla(74, 33%, 57%, 100%);
+}
+
+input {
+  background-color: hsla(0, 100%, 100%, 20%);
+  border-style: solid;
+  border-radius: 8px;
+  border-width: 2px;
+  margin: 0px 10px;
+  padding: 10px 12px;
+}
+
+.login {
+  /* ** TO DO ** fix image */
+  background-image: url('/build/assets/market_bg.jpg');
+  display: grid;
+  grid-template-rows: .5vw 1fr 1fr;
+  grid-template-columns: 250px 1fr 2fr;
+}
+
+.signup {
+  /* ** TO DO ** fix image */
+  background-image: url('/build/assets/market_bg.jpg');
+  display: grid;
+  grid-template-rows: .5vw 1fr 1fr;
+  grid-template-columns: 250px 1fr 2fr;
+}
+
+.credentialInput {
+  grid-row-start: 3;
+}
+
+.loginButtons {
+  grid-row-start: 4;
+}
+
+.navbarContainer {
+  background: hsla(52, 98%, 30%, 10%);
+  padding: 0px 10px;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.ReviewContainer {
+  background-color: hsla(0, 100%, 100%, 20%);
+  border-style: solid;
+  border-radius: 8px;
+  border-width: 2px;
+  margin: 0px 10px;
+  padding: 10px 12px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.reviewEditField {
+  background-color: hsla(0, 100%, 100%, 20%);
+  width: 400px;
+  height: 200px;
+  border-style: solid;
+  border-radius: 8px;
+  border-width: 2px;
+  margin: 0px 10px;
+  padding: 10px 12px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.grid-view div {
+  border: 1px dotted red;
+  z-index: 999;
+}
+
+.grid-view {
+  grid-column: 1/span all;
+  grid-row: 1/span all;
+}

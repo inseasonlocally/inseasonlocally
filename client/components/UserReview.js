@@ -52,7 +52,7 @@ const UserReview = (props) => {
       </div>
       <div>
         <label>Review: </label>
-        <textarea value={review} onChange={(e) => setReview(e.target.value)}></textarea>
+        <textarea className='reviewEditField' value={review} onChange={(e) => setReview(e.target.value)}></textarea>
       </div>
       <div>
         <button onClick={handleEdit}>Edit Review</button>

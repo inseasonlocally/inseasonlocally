@@ -24,27 +24,31 @@ const Login = () => {
 
   return (
     <div>
-      <div>This is where our information or about page would go</div>
-
       <div className='login'>
-        <h3>Log In Here</h3>
+        <h2>Welcome</h2>
 
-        <label>Email</label>
-        <input
-          type='email'
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
+        <div className='credentialInput'>
+          <label>Email</label>
+          <input
+            type='email'
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+          <label>Password</label>
+          <input
+            type='password'
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+          />
+        </div>
 
-        <label>Password</label>
-        <input
-          type='password'
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-        <button onClick={handleLogin}>Log In</button>
+        <div className='loginButtons'>
+          <button onClick={handleSignup}>Sign Up</button>
+          <button onClick={handleLogin}>Log In</button>
+        </div>
       </div>
-      <button onClick={handleSignup}>Sign Up</button>
+
+      <p>Find, share, and enjoy good food. Locally.</p>
     </div >
   )
 }
