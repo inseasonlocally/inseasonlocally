@@ -23,25 +23,29 @@ const Signup = () => {
   }
 
   return (
-    <div className='signup'>
-      <label>Email</label>
-      <input type='email'
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-      />
-      <label>Password</label>
-      <input type='password'
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-      <LocationInput
-        label={<label>Current Location:</label>}
-        value={location}
-        onChange={setLocation}
-        type="select"
-        choices={states}
-      />
-      <button onClick={handleSignup}>Sign Up</button>
+    <div className='signup grid-view'>
+      <div className='credentialInput'>
+        <label>Email</label>
+        <input type='email'
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        />
+        <label>Password</label>
+        <input type='password'
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+        />
+      </div>
+        <div className='loginButtons'>
+          <LocationInput
+            label={<label>Current Location:</label>}
+            value={location}
+            onChange={setLocation}
+            type="select"
+            choices={states}
+          />
+          <button onClick={handleSignup}>Sign Up</button>
+        </div>
     </div >
   )
 }

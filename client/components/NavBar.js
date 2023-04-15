@@ -13,11 +13,11 @@ const Navigation = () => {
 
   return (
     <header>
-      <div className='container'>
+      <div className='navbarContainer'>
         <Link to='/'>
           <h1> In Season Locally</h1>
         </Link>
-        <nav>
+        <nav className='navbarCredentials'>
           {/* only outut if we have a user email*/}
           {user && (
             <div>
@@ -28,8 +28,8 @@ const Navigation = () => {
           {!user && (
             <div>
               {/* <Link to='/login'>Login</Link> */}
-              <Link to='/signup'>Sign Up</Link>
-              <Link to='/'>About Us</Link>
+              <Link to='/signup'>Sign Up  </Link>
+              <Link to='/'>  About Us</Link>
             </div>
           )}
         </nav>
