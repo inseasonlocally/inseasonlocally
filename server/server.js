@@ -11,6 +11,8 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded());
 app.use('/build', express.static(path.resolve(__dirname, '../build')));
+app.use('/assets', express.static(path.join(__dirname, '../client/assets')));
+
 
 app.get('/', (req, res, next) => { console.log('root middleware reached'); return next(); }, (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'));

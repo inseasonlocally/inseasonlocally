@@ -2,14 +2,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  entry: {
-    main: path.resolve(__dirname, 'client/index.js'),
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
   },
+  entry: './client/index.js',
   output: {
     path: path.resolve(__dirname, './build'),
     filename: 'bundle.js'
   },
-  devtool: "source-map",
   target: 'web',
   mode: process.env.NODE_ENV,
   resolve: {
@@ -51,9 +53,10 @@ module.exports = {
     }),
   ],
   devServer: {
+    port: '8080',
     static: {
-      publicPath: '/build',
-      directory: path.resolve(__dirname, 'build')
+      publicPath: '/client',
+      directory: path.resolve(__dirname, 'client')
     },
     //automatically open browser after it bundles our files
     open: true,
@@ -64,5 +67,10 @@ module.exports = {
     proxy: {
       '/api': 'http://localhost:3000'
     }
+    // proxy: {
+    //   '/api/**': "http://loxalhost:3000",
+    //   'secure': false,
+    //   "changeOrigin": true
+    // }
   }
 }

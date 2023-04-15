@@ -18,7 +18,7 @@ const Produce = (props) => {
   return (
     <div>
       <div> Produce Name: {props.name}</div>
-      <div><img src={'../build/' + props.img} /></div>
+      <div><img src={'../client/' + props.img} /></div> {/**fixed */}
       <button onClick={handleReviews} >See Reviews</button>
     </div>
   )

@@ -1,14 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import { useUserContext } from "./useUserContext";
+import { useNavigate } from 'react-router';
 
 export const useLogin = () => {
-  const [error, setError] = useState(null)
   const { dispatch } = useUserContext()
   const [location, setLocation] = useState('')
+  const navigate = useNavigate();
 
   const login = async (email, password) => {
-    setError(null)
+    let error = false;
 
     const response = await fetch('/api/sign-in', {
       method: 'POST',
@@ -18,18 +19,16 @@ export const useLogin = () => {
 
     const json = await response.json()
 
-
-    if (!response.ok) {
-      setError(json.error)
-    }
-
     if (response.ok) {
-      localStorage.setItem('user', JSON.stringify(json))
-      dispatch({ type: 'LOGIN', payload: json })
-      setError(false)
+      if(json.signIn) {
+        localStorage.setItem('user', JSON.stringify(json));
+        dispatch({ type: 'LOGIN', payload: json });
+      }
+      else error = true;
     }
+    return error;
   }
-  return { login, error }
+  return login;
 }
 
 // const [location, setLocation] = useState('');
