@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../hooks/useUserContext';
+import { useReviewContext } from '../hooks/useReviewContext';
 
 // Submit button- route back to landing page
 // 	*Can we use state to render our landing page to include the last clicked product's reviews?
@@ -10,42 +12,60 @@ const AddReview = () => {
   const [produceName, setProduceName] = useState('');
   const [review, setReview] = useState('');
   const navigate = useNavigate();
+  const { user } = useUserContext()
+  const { dispatch } = useReviewContext();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    const reviewBody = {
+      email: user.email,
+      produce: produceName,
+      farm: farmName,
+      description: review
+    }
 
-    // const response = await fetch('/add-reviews', {
-    //   method: 'POST',
-    //   body: JSON.stringify(review),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
+    const response = await fetch('api/reviews', {
+      method: 'POST',
+      body: JSON.stringify(reviewBody),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
 
-    // const json = await response.json();
+    const json = await response.json();
+
+    if (response.ok) {
+      setFarmName('')
+      setProduceName('')
+      setReview('')
+      dispatch({ type: 'CREATE_REVIEW', payload: json });
+    }
 
     // if (!response.ok) {
     //   setError(json.error)
     //   setEmptyFields(json.emptyFields)
     // }
 
-    navigate('/reviews')
+    // navigate('/reviews')
   }
 
   return (
-    <form className='newReview' onSubmit={handleSubmit}>
+    <div className='newReview'>
       <label>Produce Name</label>
       <input
         type='text'
-        onChange={(e) => setProduceName}
+        onChange={(e) => setProduceName(e.target.value)}
 
       />
       <label>Farm Name</label>
-      <input />
+      <input
+        type='text'
+        onChange={(e) => setFarmName(e.target.value)}
+      />
       <label>Review</label>
-      <input />
+      <textarea onChange={(e) => setReview(e.target.value)} />
       <button onClick={handleSubmit}>Submit Review</button>
-    </form>
+    </div>
   )
 }
 
