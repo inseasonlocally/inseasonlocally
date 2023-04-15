@@ -46,7 +46,7 @@ const AddReview = () => {
     //   setEmptyFields(json.emptyFields)
     // }
 
-    // navigate('/reviews')
+    navigate('/reviews', { state: { produce: props.name } })
   }
 
   return (

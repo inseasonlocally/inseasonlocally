@@ -24,7 +24,7 @@ const Login = () => {
 
   return (
     <div>
-      <div className='login grid-view'>
+      <div className='login'>
         <h2>Welcome</h2>
 
         <div className='credentialInput'>

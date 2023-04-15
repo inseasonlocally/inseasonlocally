@@ -23,7 +23,7 @@ const Signup = () => {
   }
 
   return (
-    <div className='signup grid-view'>
+    <div className='signup'>
       <div className='credentialInput'>
         <label>Email</label>
         <input type='email'
