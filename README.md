@@ -12,13 +12,13 @@
 Overall Structure: 
 
 ***App***
-		***Login***
-		***Sign-up***
-			***Landing***
-						***Reviews***
-								***Add Review***
-								***Edit Reviews***
- 
+* Login
+* Sign-up
+	* Landing
+		* Reviews
+			* Add Review
+			* Edit Reviews	
+		
 ## Information about the tables in the database
 
 
