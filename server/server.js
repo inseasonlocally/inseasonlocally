@@ -65,7 +65,7 @@ app.patch('/api/reviews/:id', reviewController.updateReview, (req, res) => {
 
 // delete an existing review in the database
 app.delete('/api/reviews/:id', reviewController.deleteReview, (req, res) => {
-  res.status(200).json(res.locals.confirmDelete);
+  res.status(200).json(res.locals.review);
 });
 
 // catch-all route handler for any requests to an unknown route
