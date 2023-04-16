@@ -55,7 +55,7 @@ Overall Structure:
 *    produce     *     varchar(50)   (Foreign Key)
 *    state       *     varchar(30)   (Cannot be null)
 
-***Sessions***
+***Sessions*** (not used)
 *    Column      *     Data Type
 *    _id         *     serial        (Primary Key)
 *    cookie_id   *     varchar(255)  (Cannot be null)
